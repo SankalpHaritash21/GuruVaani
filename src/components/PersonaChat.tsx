@@ -13,15 +13,13 @@ const PersonaChat: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Auto-scroll to bottom on new messages
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatLog]);
 
-  // Text-to-Speech using the browser’s native API
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "en-IN"; // Or change to 'hi-IN' for a Hindi accent
+    utterance.lang = "en-IN"; // 'hi-IN'
     utterance.rate = 1;
     speechSynthesis.speak(utterance);
   };
