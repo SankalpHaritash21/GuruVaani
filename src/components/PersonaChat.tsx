@@ -46,10 +46,12 @@ const PersonaChat: React.FC = () => {
     return response.data.choices[0].message.content;
   };
 
-  // Gemini API call via REST endpoint (using updated endpoint)
+  // Gemini API
   const sendToGemini = async (prompt: string) => {
+    // Use the user's API key if available, otherwise fallback to your own environment variable.
+    const geminiApiKey = apiKey || import.meta.env.VITE_GEMINI_API_KEY;
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=${geminiApiKey}`,
       {
         contents: [
           {
