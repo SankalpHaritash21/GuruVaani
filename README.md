@@ -1,54 +1,61 @@
-# React + TypeScript + Vite
+# 🎭 Persona Chat
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Persona Chat is a **React-based AI chat app** that lets you talk with your favorite mentors in their unique styles.  
+It supports **multiple personas**, **OpenAI & Google Gemini providers**, and even has **text-to-speech** for replies.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+- 🔹 **Multiple Personas** – Chat with Hitesh Choudhary, Piyush Garg, or Harkirat Singh (more coming soon).
+- 🔹 **Multi-Provider Support** – Choose between **OpenAI GPT-4o** or **Google Gemini**.
+- 🔹 **Dynamic Persona Switching** – Change mentors instantly.
+- 🔹 **Text-to-Speech (TTS)** – Hear replies in a natural voice.
+- 🔹 **Chat Interface** – Smooth UI with styled bubbles and auto-scroll.
+- 🔹 **Keyboard Shortcuts** –
+  - `Enter` → Send message
+  - `Shift + Enter` → New line
+- 🔹 **Loading States** – Animated spinner while waiting for response.
+- 🔹 **Responsive UI** – Works beautifully on both desktop and mobile.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🚀 Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **React + TypeScript** – Frontend framework
+- **TailwindCSS** – Styling
+- **Axios** – API requests
+- **OpenAI API** – For GPT-4o responses
+- **Google Gemini API** – For Gemini responses
+- **Web Speech API** – Text-to-Speech
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## ⚙️ Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/your-username/persona-chat.git
+   cd persona-chat
+   ```
+
+2. **Install dependencies**
+
+   ```
+   npm install
+   ```
+
+3. **Set up environment variables**
+
+   ```
+   Create a .env file in the root directory and add your Gemini API key:
+
+   VITE_GEMINI_KEY=your-gemini-api-key
+   ```
+
+4. **Start the development server**
+
+   ```
+   npm run dev
+   ```
