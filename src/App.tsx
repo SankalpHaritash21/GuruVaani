@@ -1,4 +1,4 @@
-import { ThemeProvider } from "../context/ThemeContext";
+import { ThemeProvider } from "../context/ThemeProvider";
 import Header from "../components/Header";
 import ProfileCard from "../components/ProfileCard";
 import ProviderControls from "../components/ProviderControls";
