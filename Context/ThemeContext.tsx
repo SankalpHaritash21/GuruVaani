@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Theme } from "./ThemeContext.d";
+import type { Theme } from "./ThemeContext.ts";
 import { ThemeContext } from "./ThemeContextValue";
 
 function getInitialTheme(): Theme {
