@@ -1,19 +1,6 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-
-type Theme = "light" | "dark";
-type ThemeContextType = {
-  theme: Theme;
-  toggle: () => void;
-  setTheme: (t: Theme) => void;
-};
-
-const ThemeContext = createContext<ThemeContextType | null>(null);
+import React, { useEffect, useMemo, useState } from "react";
+import { Theme } from "./ThemeContext.d";
+import { ThemeContext } from "./ThemeContextValue";
 
 function getInitialTheme(): Theme {
   const ls = localStorage.getItem("theme");
@@ -47,9 +34,3 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 };
-
-export function useTheme() {
-  const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error("useTheme must be used within ThemeProvider");
-  return ctx;
-}
