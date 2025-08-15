@@ -1,6 +1,7 @@
 import axios from "axios";
 import { personas } from "./util/constant";
 import React, { useState, useRef, useEffect } from "react";
+import { GoogleGenAI } from "@google/genai";
 
 const PersonaChat: React.FC = () => {
   const [apiKey, setApiKey] = useState("");
@@ -17,7 +18,7 @@ const PersonaChat: React.FC = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatLog]);
 
-  // Text to seech functionality
+  // 🔊 Text-to-speech
   const speak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-IN";
@@ -25,6 +26,7 @@ const PersonaChat: React.FC = () => {
     speechSynthesis.speak(utterance);
   };
 
+  // 🟢 OpenAI
   const sendToOpenAI = async (prompt: string) => {
     const response = await axios.post(
       "https://api.openai.com/v1/chat/completions",
@@ -46,31 +48,38 @@ const PersonaChat: React.FC = () => {
     return response.data.choices[0].message.content;
   };
 
+  // 🔵 Gemini (new SDK)
   const sendToGemini = async (prompt: string) => {
-    const envKey = import.meta.env.VITE_GEMINI_KEY;
-    const geminiApiKey = apiKey || envKey;
-    if (!geminiApiKey) {
-      throw new Error(
-        "Gemini API key is missing. Please provide a valid API key."
-      );
-    }
-    const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key=${geminiApiKey}`,
-      {
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: `${personas[persona].systemPrompt}\n${prompt}` }],
-          },
-        ],
+    try {
+      // Get API key from state or env
+      const envKey = import.meta.env.VITE_GEMINI_KEY;
+      const geminiApiKey = apiKey || envKey;
+
+      if (!geminiApiKey) {
+        throw new Error(
+          "Gemini API key is missing. Please provide a valid API key."
+        );
       }
-    );
-    return (
-      response.data.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "No response from Gemini."
-    );
+
+      // ✅ New style client
+      const ai = new GoogleGenAI({ apiKey: geminiApiKey });
+
+      // ✅ Call the model
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash", // or "gemini-2.0-flash"
+        contents: `${personas[persona].systemPrompt}\n${prompt}`,
+      });
+
+      // ✅ Extract the text from the correct property
+      const text = response?.candidates?.[0]?.content?.parts?.[0]?.text;
+      return text || "No response from Gemini.";
+    } catch (err) {
+      console.error("Gemini API Error:", err);
+      return "Error: Failed to get response from Gemini.";
+    }
   };
 
+  // 📤 Handle sending message
   const handleSend = async () => {
     if (!userInput || (provider === "openai" && !apiKey)) return;
     setChatLog((prev) => [...prev, `You: ${userInput}`]);
@@ -126,7 +135,7 @@ const PersonaChat: React.FC = () => {
             className="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder-gray-400 disabled:opacity-60"
             placeholder={
               provider === "gemini"
-                ? "No API key needed for Gemini ✨"
+                ? "Uses your VITE_GEMINI_KEY by default ✨"
                 : "🔑 Enter OpenAI API Key"
             }
             value={apiKey}
@@ -196,7 +205,12 @@ const PersonaChat: React.FC = () => {
             rows={2}
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
           />
           <button
             className={`absolute right-4 bottom-4 px-6 py-2 rounded-lg font-medium transition-all ${
