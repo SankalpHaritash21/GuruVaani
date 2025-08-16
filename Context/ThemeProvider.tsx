@@ -1,7 +1,6 @@
-// ThemeProvider.tsx
-import React, { useEffect, useMemo, useState } from "react";
 import type { Theme } from "./ThemeTypes";
 import { ThemeContext } from "./ThemeContextValue";
+import React, { useEffect, useMemo, useState } from "react";
 
 function getInitialTheme(): Theme {
   const ls = localStorage.getItem("theme");
