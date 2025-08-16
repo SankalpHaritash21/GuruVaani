@@ -1,12 +1,12 @@
-import { ThemeProvider } from "../context/ThemeProvider";
-import Header from "../components/Header";
-import ProfileCard from "../components/ProfileCard";
-import ProviderControls from "../components/ProviderControls";
-import PersonaSelector from "../components/PersonSelector";
-import ChatWindow from "../components/ChatWindow";
-import MessageInput from "../components/MessageInput";
 import useChat from "../hooks/useChat";
+import Header from "../components/Header";
+import ChatWindow from "../components/ChatWindow";
+import ProfileCard from "../components/ProfileCard";
+import MessageInput from "../components/MessageInput";
+import { ThemeProvider } from "../contexts/ThemeProvider";
+import PersonaSelector from "../components/PersonSelector";
 import { github, personas, twitter } from "../util/constant";
+import ProviderControls from "../components/ProviderControls";
 
 export default function App() {
   const {

@@ -1,5 +1,5 @@
 import { Github, Twitter, Sun, Moon } from "lucide-react";
-import { useTheme } from "../context/useTheme";
+import { useTheme } from "../contexts/useTheme";
 
 type Props = {
   title?: string;
