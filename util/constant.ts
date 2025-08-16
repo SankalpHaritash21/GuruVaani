@@ -34,3 +34,4 @@ export type PersonaKey = keyof typeof personas;
 
 export const github = "https://github.com/SankalpHaritash21/GuruVaani";
 export const twitter = "https://x.com/JupiterCodes";
+export const Gemini_API = import.meta.env.VITE_GEMINI_KEY;

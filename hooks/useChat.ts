@@ -1,7 +1,9 @@
+// VITE_GEMINI_KEY is available via import.meta.env in Vite
+
 import { useState } from "react";
 import axios from "axios";
 import { GoogleGenAI } from "@google/genai";
-import { personas, PersonaKey } from "../util/constant";
+import { personas, PersonaKey, Gemini_API } from "../util/constant";
 
 type Provider = "openai" | "gemini";
 
@@ -57,8 +59,7 @@ export default function useChat() {
 
   const sendToGemini = async (prompt: string) => {
     try {
-      const envKey = import.meta.env.VITE_GEMINI_KEY as string | undefined;
-      const geminiApiKey = apiKey || envKey;
+      const geminiApiKey = apiKey || Gemini_API;
       if (!geminiApiKey) throw new Error("Missing Gemini API key");
 
       const ai = new GoogleGenAI({ apiKey: geminiApiKey });
